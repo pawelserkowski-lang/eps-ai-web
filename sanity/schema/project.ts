@@ -9,6 +9,7 @@ export const projectType = defineType({
       name: 'title',
       title: 'Nazwa Projektu',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'subtitle',
@@ -33,8 +34,37 @@ export const projectType = defineType({
     }),
     defineField({
       name: 'color',
-      title: 'Kolor Gradientu',
+      title: 'Kolor Gradientu (np. from-emerald-500 to-black)',
       type: 'string',
+    }),
+    defineField({
+      name: 'iconType',
+      title: 'Ikona',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Błyskawica', value: 'zap' },
+          { title: 'Baza danych', value: 'database' },
+          { title: 'Mózg', value: 'brain' },
+          { title: 'Terminal', value: 'terminal' }
+        ],
+      },
+      initialValue: 'brain'
+    }),
+    defineField({
+      name: 'image',
+      title: 'Obraz Projektu',
+      type: 'image',
+      options: {
+        hotspot: true
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Tekst alternatywny',
+        })
+      ]
     }),
   ],
 })

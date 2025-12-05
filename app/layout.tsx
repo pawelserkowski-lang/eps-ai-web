@@ -11,6 +11,7 @@ const maguntia = UnifrakturMaguntia({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: "EPS AI Solutions",
   description: "Arcane Intelligence for the New Age",
 };
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${maguntia.variable} font-sans antialiased`}>
+      <body className={\\ \ font-sans antialiased\}>
         {children}
         <SanityLive />
       </body>

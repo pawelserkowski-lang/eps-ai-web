@@ -12,9 +12,9 @@ export default async function Home() {
     );
   }
 
-  const query = `*[_type == "project"] | order(_createdAt asc) {
-    _id, title, subtitle, description, repoLink, tags, color
-  }`;
+  const query = \*[_type == "project"] | order(_createdAt asc) {
+    _id, title, subtitle, description, repoLink, tags, color, iconType, image
+  }\;
 
   let projects: Project[] = [];
   
