@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, UnifrakturMaguntia } from "next/font/google";
 import "./globals.css";
+import { SanityLive } from "@/sanity/lib/live";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const maguntia = UnifrakturMaguntia({ 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${maguntia.variable} font-sans antialiased`}>
         {children}
+        <SanityLive />
       </body>
     </html>
   );

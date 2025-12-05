@@ -10,7 +10,7 @@
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Opcjonalnie: Custom scrollbar dla klimatu "hacker" */
+/* Scrollbar Hack */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #022c22; }
 ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }

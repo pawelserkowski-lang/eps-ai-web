@@ -1,3 +1,14 @@
+Write-Host "🚀 INICJACJA PROCEDURY NAPRAWCZEJ 'THE SIXTH AGENT'..." -ForegroundColor Cyan
+
+# --- 1. CZYSZCZENIE ZALEŻNOŚCI (Architect & Security) ---
+Write-Host "1/5 Usuwanie bloatware (styled-components)..." -ForegroundColor Yellow
+npm uninstall styled-components
+# Opcjonalnie: upewniamy się, że nie ma śmieci w package.json ręcznie, ale npm uninstall powinno wystarczyć.
+
+# --- 2. KONFIGURACJA SANITY LIVE (Speedster) ---
+# Nadpisujemy app/page.tsx, aby używał sanityFetch (Live Content)
+Write-Host "2/5 Wdrażanie Sanity Live w app/page.tsx..." -ForegroundColor Green
+$pageContent = @'
 import React from "react";
 import { sanityFetch } from "@/sanity/lib/live";
 import { Database, Zap, BrainCircuit, Terminal, ChevronRight } from "lucide-react";
@@ -136,3 +147,83 @@ export default async function Home() {
     </main>
   );
 }
+'@
+Set-Content -Path "app\page.tsx" -Value $pageContent -Encoding UTF8
+
+# --- 3. AKTUALIZACJA LAYOUTU (Speedster) ---
+# Dodajemy <SanityLive /> do layoutu
+Write-Host "3/5 Wstrzykiwanie SanityLive do app/layout.tsx..." -ForegroundColor Green
+$layoutContent = @'
+import type { Metadata } from "next";
+import { Inter, UnifrakturMaguntia } from "next/font/google";
+import "./globals.css";
+import { SanityLive } from "@/sanity/lib/live";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const maguntia = UnifrakturMaguntia({ 
+  weight: "400", 
+  subsets: ["latin"],
+  variable: "--font-serif" 
+});
+
+export const metadata: Metadata = {
+  title: "EPS AI Solutions",
+  description: "Arcane Intelligence for the New Age",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} ${maguntia.variable} font-sans antialiased`}>
+        {children}
+        <SanityLive />
+      </body>
+    </html>
+  );
+}
+'@
+Set-Content -Path "app\layout.tsx" -Value $layoutContent -Encoding UTF8
+
+# --- 4. NAPRAWA STYLÓW (Architekt) ---
+# Czysty Tailwind 4 w globals.css
+Write-Host "4/5 Standaryzacja app/globals.css (Tailwind v4)..." -ForegroundColor Green
+$cssContent = @'
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-serif);
+  
+  --color-background: #020617;
+  --color-foreground: #ecfdf5;
+  
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Scrollbar Hack */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #022c22; }
+::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  overflow-x: hidden;
+}
+'@
+Set-Content -Path "app\globals.css" -Value $cssContent -Encoding UTF8
+
+# --- 5. NAPRAWA FAVICON (Jester) ---
+# Generujemy prosty zielony kwadrat w Base64 jako PNG, bo tamten plik tekstowy to była zbrodnia.
+Write-Host "5/5 Generowanie nowej favicony (Jester approved)..." -ForegroundColor Magenta
+$base64Icon = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkElEQVR42mNkQAPb12/+z8gABUwM6AALiBQDQ0F26v/CjBT/48qT/s8vT2KAgq3rN/0vzkz9X5KR8j+uLPF/XFkCAxRkJv8vy0r7H1+e/D+2LIFBTE8ZSHNwQcz/wQUx/31zIv97Zkf8d08P/++WEfbfITXkv3VyyH+rpJD/Fokh/w0Tg/8bJAT9148L+q8bE/hfKyrob4Wg338Ff7//cn5+/2W8ff9LeHv/F/Dw/M/v6fWf193rP4eb5392F7f/LC6u/xmcXP/ZnF3+WZ1d/lmcnP9ZnJz/WZxD/lucnP9ZnJz/WZxc/1mcXP9ZnV3+WZ1d/tmcXf7ZXVz/c7h5/ed19/rP7+n1X8DD87+Et/d/GW/f/3J+fv8V/P3+axUE/taMCvxvEB/03zAxiEFO2H+7lJD/LukR/90ywv57Zkf8982J/B9cEPO/IDPlf0FGyv+CjJT/BRkp/wsyUv4XZKT8L8hI+V+QkfK/ICP1f0FG6v/CzNT/xZmp/0syUv6XZKT8L8lI/V+Skfo/vzzpf3550v/48iSgYQCtmk7q8X3OowAAAABJRU5ErkJggg=="
+$iconBytes = [Convert]::FromBase64String($base64Icon)
+[IO.File]::WriteAllBytes("$PWD\app\favicon.ico", $iconBytes)
+
+Write-Host "------------------------------------------------" -ForegroundColor Cyan
+Write-Host "✅ SYSTEM STABLE. AGENTS STANDING DOWN." -ForegroundColor Green
+Write-Host "👉 Uruchom 'npm run dev', aby zobaczyć zmiany w czasie rzeczywistym." -ForegroundColor Yellow
