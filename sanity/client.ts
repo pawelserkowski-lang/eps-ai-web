@@ -1,8 +1,9 @@
 import { createClient } from "next-sanity";
+import { apiVersion, dataset, projectId } from "./env";
 
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-01-01",
-  useCdn: false,
+  projectId,
+  dataset,
+  apiVersion, // Teraz korzysta ze stałej z env.ts, zamiast hardcodowanego stringa
+  useCdn: true, // Włączone dla wydajności (zwraca cache'owane dane)
 });

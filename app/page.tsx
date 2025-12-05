@@ -1,25 +1,44 @@
 import React from "react";
-import { client } from "../sanity/client";
-import { Database, Zap, BrainCircuit, Terminal, Github, ChevronRight, Shield, Cpu } from "lucide-react";
+import { client } from "@/sanity/client";
+import { Database, Zap, BrainCircuit, Terminal, ChevronRight } from "lucide-react";
 
-// Server Component Fetch
-async function getProjects() {
-  // Zabezpieczenie: jeśli brak ID projektu, zwróć pustą tablicę
+// Konfiguracja ISR (Incremental Static Regeneration)
+// Strona będzie generowana statycznie i odświeżana co 3600 sekund (1h)
+export const revalidate = 3600;
+
+// Definicja typu dla Projektu (Bezpiecznik jest dumny)
+interface Project {
+  _id: string;
+  title: string;
+  subtitle?: string;
+  description?: string;
+  repoLink?: string;
+  tags?: string[];
+  color?: string;
+}
+
+async function getProjects(): Promise<Project[]> {
   if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    console.error("Critical: NEXT_PUBLIC_SANITY_PROJECT_ID is missing.");
     return [];
   }
   
-  // UWAGA: Tu są poprawne znaki (grawisy)
   const query = `*[_type == "project"] | order(_createdAt asc) {
     _id, title, subtitle, description, repoLink, tags, color
   }`;
   
-  return await client.fetch(query, {}, { cache: 'no-store' });
+  try {
+    return await client.fetch(query);
+  } catch (error) {
+    console.error("Sanity fetch error:", error);
+    return [];
+  }
 }
 
 const getIcon = (title: string) => {
-  if (title?.toUpperCase().includes("LITE")) return Zap;
-  if (title?.toUpperCase().includes("REGIS")) return Database;
+  const upper = title?.toUpperCase() || "";
+  if (upper.includes("LITE")) return Zap;
+  if (upper.includes("REGIS")) return Database;
   return BrainCircuit;
 };
 
@@ -78,7 +97,7 @@ export default async function Home() {
               The Trinity Artifacts
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {projects.map((project: any) => {
+              {projects.map((project) => {
                 const Icon = getIcon(project.title);
                 return (
                   <div key={project._id} className="group relative bg-emerald-950/20 border border-emerald-900 rounded-2xl p-8 hover:border-emerald-500/50 transition-all flex flex-col">
@@ -103,16 +122,18 @@ export default async function Home() {
                       </p>
 
                       <div className="flex flex-wrap gap-2 mb-6">
-                        {project.tags?.map((tag: string) => (
+                        {project.tags?.map((tag) => (
                           <span key={tag} className="px-2 py-1 text-[10px] uppercase border border-emerald-800/30 rounded text-emerald-500 bg-emerald-950/30">
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      <a href={project.repoLink} target="_blank" className="text-sm font-bold text-emerald-500 hover:text-emerald-300 flex items-center gap-2 mt-auto">
-                        <Terminal size={14} /> ACCESS REPO
-                      </a>
+                      {project.repoLink && (
+                        <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-emerald-500 hover:text-emerald-300 flex items-center gap-2 mt-auto">
+                          <Terminal size={14} /> ACCESS REPO
+                        </a>
+                      )}
                     </div>
                   </div>
                 );
