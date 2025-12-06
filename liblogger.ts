@@ -43,11 +43,11 @@ export const logger = pino({
 
 // Pomocnicze funkcje dla spójności (opcjonalne, ale zalecane przez Architekta)
 
-export const logAction = (action: string, meta: Record<string, any> = {}) => {
+export const logAction = (action: string, meta: Record<string, unknown> = {}) => {
   logger.info({ ...meta, action }, `Action performed: ${action}`);
 };
 
-export const logError = (error: unknown, context: string, meta: Record<string, any> = {}) => {
+export const logError = (error: unknown, context: string, meta: Record<string, unknown> = {}) => {
   const err = error instanceof Error ? { message: error.message, stack: error.stack, name: error.name } : { message: String(error) };
   logger.error({ ...meta, err, context }, `Error in ${context}: ${err.message}`);
 };

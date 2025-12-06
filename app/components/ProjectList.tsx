@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Database, Zap, BrainCircuit, Terminal } from "lucide-react";
 import { urlFor } from "@/sanity/lib/image";
+import { type SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 export interface Project {
   _id: string;
@@ -12,7 +13,7 @@ export interface Project {
   tags?: string[];
   color?: string;
   iconType?: string;
-  image?: any;
+  image?: SanityImageSource & { alt?: string };
 }
 
 const iconMap: Record<string, React.ElementType> = {
@@ -30,7 +31,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
         
         return (
           <div key={project._id} className="group relative bg-emerald-950/20 border border-emerald-900 rounded-2xl p-8 hover:border-emerald-500/50 transition-all flex flex-col mb-8 overflow-hidden min-h-[300px]">
-            <div className={\bsolute inset-0 bg-gradient-to-br \ opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl\} />
+            <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl" />
             
             {project.image && (
                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">

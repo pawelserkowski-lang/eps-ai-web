@@ -1,10 +1,9 @@
 import React from "react";
 import { sanityFetch } from "@/sanity/lib/live";
-import { Hero } from "@/components/modules/hero/Hero";
-import { ProjectList } from "@/components/modules/projects/ProjectList";
-import { type Project } from "@/types";
+import { Hero } from "./components/Hero";
+import { ProjectList, type Project } from "./components/ProjectList";
 // IMPORT LOGGERA
-import { logger, logError } from "@/lib/logger";
+import { logger, logError } from "@/liblogger";
 
 export default async function Home() {
   // Logowanie systemowe na starcie
@@ -45,4 +44,10 @@ export default async function Home() {
   }
 
   // ... reszta komponentu (JSX)
+  return (
+    <main className="min-h-screen bg-black text-white selection:bg-emerald-500/30">
+      <Hero isConfigured={projects.length > 0} />
+      <ProjectList projects={projects} />
+    </main>
+  );
 }

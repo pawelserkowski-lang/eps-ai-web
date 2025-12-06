@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ChevronRight, Database } from "lucide-react";
 
 interface HeroProps {
@@ -33,9 +34,9 @@ export function Hero({ isConfigured }: HeroProps) {
            <a href="#projects" className="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded transition-all flex items-center justify-center gap-2">
              <ChevronRight size={18} /> EXPLORE
            </a>
-           <a href="/studio" className="px-8 py-3 border border-emerald-800 text-emerald-400 rounded hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2">
+           <Link href="/studio" className="px-8 py-3 border border-emerald-800 text-emerald-400 rounded hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2">
              <Database size={18} /> CMS LOGIN
-           </a>
+           </Link>
         </div>
       </div>
     </section>
