@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, UnifrakturMaguntia } from "next/font/google";
 import "./globals.css";
 import { SanityLive } from "@/sanity/lib/live";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const maguntia = UnifrakturMaguntia({ 
-  weight: "400", 
-  subsets: ["latin"],
-  variable: "--font-serif" 
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
@@ -23,7 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${maguntia.variable} font-sans antialiased`}>
+      <body className="font-mono antialiased bg-cyber-black text-cyber-green">
+        <div className="scanlines" />
         {children}
         <SanityLive />
       </body>

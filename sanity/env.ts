@@ -15,7 +15,7 @@ function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
     // W środowisku deweloperskim tylko ostrzegamy, żeby UI mogło wyświetlić błąd
     if (typeof window === 'undefined') {
-       console.warn(\[Sanity Config Warning]: \\);
+       console.warn('[Sanity Config Warning]: ' + errorMessage);
     }
     // Zwracamy pusty string lub flagę błędu, żeby uniknąć crasha przy imporcie.
     // Logika w app/page.tsx obsłuży ten stan.
