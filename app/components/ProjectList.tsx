@@ -30,48 +30,51 @@ export function ProjectList({ projects }: { projects: Project[] }) {
         const Icon = iconMap[project.iconType || "brain"] || BrainCircuit;
         
         return (
-          <div key={project._id} className="group relative bg-emerald-950/20 border border-emerald-900 rounded-2xl p-8 hover:border-emerald-500/50 transition-all flex flex-col mb-8 overflow-hidden min-h-[300px]">
-            <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl" />
-            
+          <div key={project._id} className="group relative bg-transparent border border-cyber-dim p-8 hover:border-cyber-green transition-none flex flex-col mb-8 overflow-hidden min-h-[300px]">
             {project.image && (
-               <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+               <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-none pointer-events-none">
                  <Image 
                    src={urlFor(project.image).width(800).url()} 
                    alt={project.image.alt || project.title}
                    fill
-                   className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                   className="object-cover grayscale"
                  />
                </div>
             )}
 
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex justify-between items-start mb-6">
-                <div className="p-3 bg-black/60 rounded-xl border border-emerald-800/30 text-emerald-400 backdrop-blur-sm">
+                <div className="p-3 bg-black border border-cyber-dim text-cyber-green">
                   <Icon size={28} />
                 </div>
-                <div className="font-mono text-[10px] text-emerald-600 font-bold tracking-[0.2em] uppercase border border-emerald-900/50 px-2 py-1 rounded bg-black/40 backdrop-blur-sm">
+                <div className="font-mono text-[10px] text-cyber-green font-bold tracking-[0.2em] uppercase border border-cyber-dim px-2 py-1 bg-black">
                   {project.subtitle || "ARTIFACT"}
                 </div>
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-3 font-serif drop-shadow-lg">
+              <h3 className="text-2xl font-bold text-cyber-green mb-3 uppercase tracking-wide text-glow">
                 {project.title}
               </h3>
               
-              <p className="text-emerald-400/80 mb-8 text-sm leading-relaxed flex-grow drop-shadow-md">
+              <p className="text-cyber-green/80 mb-8 text-sm leading-relaxed flex-grow font-mono">
                 {project.description}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {project.tags?.map((tag) => (
-                  <span key={tag} className="px-2 py-1 text-[10px] uppercase border border-emerald-800/30 rounded text-emerald-500 bg-emerald-950/50 backdrop-blur-md">
+                  <span key={tag} className="px-2 py-1 text-[10px] uppercase border border-cyber-dim text-cyber-dim group-hover:text-cyber-green group-hover:border-cyber-green transition-none">
                     {tag}
                   </span>
                 ))}
               </div>
 
               {project.repoLink && (
-                <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-emerald-500 hover:text-emerald-300 flex items-center gap-2 mt-auto">
+                <a
+                  href={project.repoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-bold text-cyber-green border border-cyber-dim px-4 py-2 hover:bg-cyber-green hover:text-cyber-black transition-none flex items-center justify-center gap-2 mt-auto uppercase"
+                >
                   <Terminal size={14} /> ACCESS REPO
                 </a>
               )}
