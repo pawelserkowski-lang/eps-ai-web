@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={\\ \ font-sans antialiased\}>
+      <body className={`${inter.variable} ${maguntia.variable} font-sans antialiased`}>
         {children}
         <SanityLive />
       </body>
